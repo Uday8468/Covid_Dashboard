@@ -4,11 +4,7 @@ import { NavAlignCont, NavItems, NavLogo, NavLogoCont, NavbarContainer } from '.
 import { useNavigate } from 'react-router-dom';
 const Header = () => {
     let navigate = useNavigate();
-    const [activePath,setActivePath] = useState("Home")
-
-    useEffect(() => {
-        console.log(activePath)
-    },[activePath])
+    const [activePath,setActivePath] = useState("Home")    
     return (
         <NavbarContainer>
             <NavLogoCont>
@@ -17,12 +13,14 @@ const Header = () => {
             <NavAlignCont>
                 <NavItems onClick={() => {
                     setActivePath("Home")
+                    console.log(activePath,"in home click")
                     navigate("/home")
                 }} status={activePath === "Home"}>
                     Home
                 </NavItems>
                 <NavItems onClick={() => {
                     setActivePath("About")
+                    console.log(activePath,"in about click")
                     navigate("/about")
                 }} status={activePath === "About"}>
                     About
