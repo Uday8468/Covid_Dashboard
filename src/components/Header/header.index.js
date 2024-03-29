@@ -3,7 +3,7 @@ import logoImg from "./Images/COVID19INDIA.svg"
 import { NavAlignCont, NavItems, NavLogo, NavLogoCont, NavbarContainer } from './header.styled'
 import { useNavigate } from 'react-router-dom';
 const Header = () => {
-    let navigate = useNavigate();
+    const  navigate = useNavigate();
     const [activePath,setActivePath] = useState("Home")    
     return (
         <NavbarContainer>
@@ -12,8 +12,6 @@ const Header = () => {
             </NavLogoCont>
             <NavAlignCont>
                 <NavItems onClick={() => {
-                    setActivePath("Home")
-                    console.log(activePath,"in home click")
                     navigate("/home")
                 }} status={activePath === "Home"}>
                     Home

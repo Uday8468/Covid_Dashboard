@@ -4,6 +4,7 @@ import Home from './components/Home/Home.index';
 import About from './components/About/About.index';
 import { GlobalStyle } from './components/globalstyles';
 import Canvas from './components/dummy';
+import NotFound from './components/NotFound';
 function App() {
   return (
     <>
@@ -13,6 +14,7 @@ function App() {
           <Route path='/' element={<Canvas />} />
           <Route path='/home' element={<Home />} />
           <Route path='/about' element={<About />} />
+          <Route path="/*" element ={<NotFound />} />
         </Routes>
       </Router>
     </>

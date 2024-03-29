@@ -6,7 +6,7 @@ background:#161625;
 display:flex;
 align-items:center;
 flex-direction:column;
-height:100%;
+height:${(props) => props?.status ? "100vh" : "100%"};
 width:100%;
 `
 
@@ -81,4 +81,39 @@ cursor:pointer;
 
 export const HorizonatlLine = styled.div`
 border: 1px solid #475569;
+`
+
+export const TotalOptionIconDiv = styled.div`
+display: flex;
+    align-items: center;
+    width: 76px;
+    height: 32px;
+    justify-content: center;
+    background: #1CD4D429;
+    border-radius: 4px;
+    gap: 5px;
+    margin-right: 24px
+`
+
+export const OptionIconText = styled.div`
+font-family: Roboto600;
+font-size: 16px;
+line-height: 24px;
+text-align: left;
+color:#FACC15;
+`
+export const TotalOptionDiv = styled.div`
+border: 1px solid ;
+height: 64px;
+background:inherit;
+color:#64748B;
+font-size:16px;
+font-family:Roboto400;
+border-left:none;
+border-top:none;
+border-right:none;
+width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 `
