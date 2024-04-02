@@ -113,7 +113,62 @@ border-left:none;
 border-top:none;
 border-right:none;
 width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+display: flex;
+justify-content: space-between;
+align-items:center;
+`
+
+export const TotalStateNameCont = styled.div`
+display:flex;
+justify-content:space-between;
+width: 100%;
+height: 64px;
+margin-top: 64px;
+
+`
+
+export const StateNameCont = styled.div`
+background: #0284C729;
+border-radius:32px;
+width: 312px;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family: Roboto500;
+font-size: 32px;
+color:#0EA5E9;
+`
+
+export const TotalTestedCountCont = styled.div`
+display:flex;
+flex-direction:column;
+height:100%;
+gap:4px;
+align-items:flex-end;
+justify-content:center;
+`
+
+export const TestedText = styled.div`
+font-family: Roboto500;
+font-size: 16px;
+line-height: 24px;
+text-align: left;
+color:#94A3B8;
+`
+export const TestedCount = styled.div`
+font-family: Roboto500;
+font-size: 24px;
+line-height: 24px;
+text-align: right;
+color:#94A3B8;
+`
+
+export const LastUpdatedText = styled.div`
+margin-top:12px;
+font-family: Roboto400;
+font-size: 18px;
+line-height: 24px;
+text-align: left;
+color:#CBD5E1;
 `

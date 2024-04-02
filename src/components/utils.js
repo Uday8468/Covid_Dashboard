@@ -35,6 +35,25 @@ export const getFAQList = async () => {
     return null;
   }
 }
+
+export const getTimeLinesOfState = async (stateCode) => {
+  try {
+    const response = await fetch(
+      `https://apis.ccbp.in/covid19-timelines-data/${stateCode}`,
+      {
+        method: "GET"
+      }
+    );
+    const result = await response.json();
+    if (response.ok) {
+      return result;
+    } else {
+      return null;
+    }
+  } catch (err) {
+    return null;
+  }
+}
 const indianStates = [
   { state_code: "AN", state_name: "Andaman and Nicobar Islands" },
   { state_code: "AP", state_name: "Andhra Pradesh" },
@@ -92,6 +111,7 @@ export function convertObjectsDataIntoListItemsUsingForInMethod(data) {
       const population = data[keyName].meta.population
         ? data[keyName].meta.population
         : 0;
+      const updatedAt = data[keyName].meta.last_updated
       resultList.push({
         stateCode: keyName,
         name: indianStates.find((state) => state.state_code === keyName)
@@ -101,9 +121,90 @@ export function convertObjectsDataIntoListItemsUsingForInMethod(data) {
         recovered,
         tested,
         population,
+        updatedAt,
         active: confirmed - (deceased + recovered)
       });
     }
   });
   return resultList;
+}
+
+export const convertObjectsToListForGraph = (data) => {
+  let datesList = [];
+  let districtList = [];
+  const keyNames = Object.keys(data);
+
+  let mainObj = data[keyNames[0]];
+
+  const { dates, districts } = mainObj;
+  let arr = Object.entries(mainObj)
+  datesList.push({ ...dates })
+  districtList.push({ ...districts })
+  let deceased = 0;
+  let confirmed = 0;
+  let recovered = 0;
+  let tested = 0;
+  let active = 0
+
+  let totalData = datesList.map((each) => {
+    let keys = Object.keys(each)
+    keys.map((eachData) => {
+      let totalObj = each[eachData]?.total
+      let activeExp = totalObj?.confirmed - (totalObj?.deceased + totalObj?.recovered)
+      confirmed = confirmed + totalObj?.confirmed
+      active = active + activeExp
+      recovered = recovered + totalObj?.recovered
+      deceased = deceased + totalObj?.deceased
+      tested = tested + totalObj?.tested
+    })
+    return { confirmed,active,recovered,deceased,tested }
+
+  })
+
+  deceased = 0
+  confirmed = 0;
+  recovered = 0;
+  tested = 0;
+  active = 0
+
+  let districtTotal = districtList.map((each) => {
+    let keys = Object.keys(each)
+    let newArray = keys.map((eachData) => {
+      let totalObj = each[eachData]?.dates
+      let listOfDates = Object.keys(totalObj)
+      
+      listOfDates.map((value) => {
+        let totalCount = totalObj[value]?.total
+        let activeExp = totalCount?.confirmed - (totalCount?.deceased + totalCount?.recovered)
+        confirmed = confirmed + totalCount?.confirmed
+        active = active + activeExp
+        recovered = recovered + totalCount?.recovered
+        deceased = deceased + totalCount?.deceased
+        tested = tested + totalCount?.tested
+      })
+      return {[eachData]:{confirmed,active,recovered,deceased,tested}}
+
+    })
+    return newArray
+    // each = districtList
+    // re
+  })
+
+  return {totalData,districtTotal}
+
+
+
+  // return {datesList,districtList}
+
+
+}
+
+export function formatTimestamp(timestamp) {
+  const date = new Date(timestamp);
+  const options = {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  };
+  return new Intl.DateTimeFormat('en-US', options).format(date);
 }
